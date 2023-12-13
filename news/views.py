@@ -51,7 +51,7 @@ def detail(request, id):
 			Comment.objects.create(
 					comment = comment,
 					news = news,
-					author = request.user,
+					author = author,
 					)
 			return redirect('home')
 	return render(request, 'detail.html', {'news':news, 'form':form})
