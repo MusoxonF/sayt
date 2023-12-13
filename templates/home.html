@@ -68,10 +68,14 @@
   <span>{{i.category}}</span> | <span>{{i.created}}</span>
   <h2><a href="{%url 'detail' i.id %}">{{i.title}}</a></h2>
   <span>{{i.sum_of_likes}}</span>
+  {% if request.user.is_authenticated%}
   <form method="post" action="{% url 'like' i.id %}">
     {% csrf_token %}
     <button type="submit" class="btn btn-outline-danger">like</button>
   </form>
+  {%else%}
+      <a href="{%url 'Login'%}"><button type="submit" class="btn btn-outline-danger" >like</button></a>
+      {%endif%}
   {% if i.author == request.user %}
 	<span><a href="{%url 'edit' i.id %}">edit</a></span>
 	<span><a href="{%url 'delete' i.id %}">delete</a></span>
@@ -108,10 +112,14 @@
 <span>{{i.category}}</span> | <span>{{i.created}}</span>
   <h2><a href="{%url 'detail' i.id %}">{{i.title}}</a></h2>
   <span>{{i.sum_of_likes}}</span>
+  {% if request.user.is_authenticated%}
   <form method="post" action="{% url 'like' i.id %}">
     {% csrf_token %}
     <button type="submit" class="btn btn-outline-danger">like</button>
   </form>
+  {%else%}
+      <a href="{%url 'Login'%}"><button type="submit" class="btn btn-outline-danger" >like</button></a>
+      {%endif%}
   {% if i.author == request.user %}
   <span><a href="{%url 'edit' i.id %}">edit</a></span>
   <span><a href="{%url 'delete' i.id %}">delete</a></span>
