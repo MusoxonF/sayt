@@ -1,15 +1,18 @@
 from django.shortcuts import render, redirect
 from .forms import NewsForm, CommentForm
 
-from .models import News, Comment
+from .models import News
 from user.models import User
 from django.views import View
+from .models import Comment as CommentModel
 
 
 class Create_news(View):
 	def get(self, request):
 		form = NewsForm()
 		return render(request, 'create.html', {'form': form})
+
+		
 	def post(self, request):
 		form = NewsForm(data = request.POST)
 		if form.is_valid():
@@ -41,6 +44,12 @@ def delete(request, id):
 	return redirect('home')
 
 
+def delete_comment(request, id):
+	comment = CommentModel.objects.get(id=id)
+	comment.delete()
+	return redirect('home')
+
+
 def detail(request, id):
 	news=News.objects.get(id=id)
 	form = CommentForm()
@@ -48,10 +57,10 @@ def detail(request, id):
 		form = CommentForm(data=request.POST)
 		if form.is_valid():
 			comment = form.cleaned_data['comment']
-			Comment.objects.create(
+			CommentModel.objects.create(
 					comment = comment,
 					news = news,
-					author = author,
+					author = request.user,
 					)
 			return redirect('home')
 	return render(request, 'detail.html', {'news':news, 'form':form})
