@@ -20,7 +20,7 @@
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
         </li>
-        {% if request.user.status.is_admin %}
+        {% if request.user.status == 'admin'%}
         <li class="nav-item">
           <a class="nav-link" href="{%url 'create' %}">Create News</a>
         </li>
