@@ -8,7 +8,10 @@
 <body>
 <h2>detail page</h2>
 	<hr>
-	<h3>{{news.title}} <!-- <span>{{news.author}}</span>--></h3> 
+	{%if news.photo %}
+	<hr><p><img width='400' controls src="{{news.photo.url}}"></p>
+	{%endif%}
+	<h3>{{news.title}} </h3> 
 	<br>
 	<p>{{news.content}}</p>
 	<hr>
@@ -34,7 +37,7 @@
 		<h3>No comments yet</h3>
 	{%endif%}
 	
-	<h5>Please leave comment ...</h5>
+
 
 			{% if request.user.is_authenticated%}
 

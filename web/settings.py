@@ -13,6 +13,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+PROJECT_DIR=os.path.dirname('media')
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -39,8 +40,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    'rest_framework',
+
     'news',
-    'user'
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +123,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT= os.path.join(PROJECT_DIR,'static_media/')
+STATICFILES_DIRS = (os.path.join(BASE_DIR / 'static'),)
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR/'media'
+
 AUTH_USER_MODEL = 'user.User'
 
 # Default primary key field type

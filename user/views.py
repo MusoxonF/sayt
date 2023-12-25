@@ -44,19 +44,19 @@ def Profile(request):
 
 
 def like(request, id):
-
-	if request.method == 'POST':
-		news = News.objects.get(id=id)
-		if Like.objects.filter(news=news):
-			l = Like.objects.filter(news=news).first()
-			if request.user in l.user.all():
-				l.user.remove(request.user)
+	if request.user.is_authenticated:
+		if request.method == 'POST':
+			news = News.objects.get(id=id)
+			if Like.objects.filter(news=news):
+				l = Like.objects.filter(news=news).first()
+				if request.user in l.user.all():
+					l.user.remove(request.user)
+					return redirect('home')
+				l.user.add(request.user)
 				return redirect('home')
-			l.user.add(request.user)
+	
+			like = Like.objects.create(
+				news=news
+				)
+			like.user.add(request.user)
 			return redirect('home')
-
-		like = Like.objects.create(
-			news=news
-			)
-		like.user.add(request.user)
-		return redirect('home')

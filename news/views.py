@@ -12,20 +12,20 @@ class Create_news(View):
 		form = NewsForm()
 		return render(request, 'create.html', {'form': form})
 
-		
 	def post(self, request):
-		form = NewsForm(data = request.POST)
-		if form.is_valid():
-			form.save()
-			return redirect('home')
+		if request.user.status == 'admin':
+			form = NewsForm(data = request.POST)
+			if form.is_valid():
+				form.save()
+				return redirect('home')
 		return render(request, 'create.html', {'form':form})
 	
 class Edit(View):
-	def get(self, request):
+	def get(self, request, id):
 		news = News.objects.get(id=id)
 		form = NewsForm(instance=news)
 		return render(request, 'create.html', {'form': form})
-	def post(self, request):
+	def post(self, request, id):
 		form = NewsForm(instance=news, data = request.POST)
 		if form.is_valid():
 			form.save()
